@@ -1,0 +1,17 @@
+<a data-toggle="modal" href="<%=new_nurse_examination_path(@nurse.id)%>" data-target="#myModal" class="add_new_item">Dodaj novu vrstu pregleda</a>
+<table class="table">
+	<tr>
+		<th>Naziv</th>
+		<th>Opis</th>
+		<th>Uredi</th>
+		<th>Izbrisi</th>
+	</tr>
+	<% @examinations.each do |examination| %>
+		<tr>
+			<td><%= examination.name %></td>
+			<td><%= examination.description %></td>
+			<td><%= link_to 'Izmjeni', edit_nurse_examination_path(@nurse.id, examination.id) %></td>
+			<td><a href="<%=nurse_examination_path(@nurse.id, examination.id)%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>
+		</tr>
+	<% end %>
+</table>

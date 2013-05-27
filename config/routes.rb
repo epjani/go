@@ -60,11 +60,15 @@ Ginekologija::Application.routes.draw do
   match 'nurses/login' => 'nurses#login'
 
   resources :nurses do
-    
+    match 'logout'
 
     resource :dashboard do
       get :index
     end
+
+    resources :doctors
+    resources :examinations
+    resources :reservations
   end
 
 

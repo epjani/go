@@ -1,0 +1,31 @@
+<div class="modal-header">
+   	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+   	<h3 id="myModalLabel">Rezervisi novi termin</h3>
+</div>
+<div class="modal-body">
+	<%= form_tag nurse_reservations_path(@nurse.id), :method => 'POST' do%>
+		<input type="text" name="first_name" placeholder="Ime" />
+		<input type="text" name="last_name" placeholder="Prezime" />
+		<input type="text" name="birthday" placeholder="Godiste" />
+		<input type="text" name="phone" placeholder="Telefon" />
+		<select name="doctor_id">
+			<option value="-1">Izaberi doktora</option>
+			<% @doctors.each do |doctor| %>
+				<option value="<%=doctor.id%>"><%=doctor.full_name%></option>
+			<% end %>
+		</select>
+		<select name="examination_id">
+			<option value="-1">Izaberi vrstu pregleda</option>
+			<% @examinations.each do |examination| %>
+				<option value="<%=examination.id%>"><%=examination.name%></option>
+			<% end %>
+		</select>
+		<select name="examination_time_id">
+			<option value="-1">Izaberi termin pregleda</option>
+			<% @examination_times.each do |et| %>
+				<option value="<%=et.id%>"><%=et.examination_time%></option>
+			<% end %>
+		</select>
+		<button class="btn btn-primary" type="submit">Kreiraj</button>
+	<% end %>
+</div>

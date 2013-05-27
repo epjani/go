@@ -2,15 +2,14 @@ class ApplicationController < BaseController
 	before_filter :login_required
   	protect_from_forgery
 
-  	
   	private
 
 	def login_required
 
-	    @current_nurse = Nurse.find(session[:id]) if (@current_nurse.nil? && session[:id])
+	    @nurse = Nurse.find(session[:id]) if (@current_nurse.nil? && session[:id])
 
 	    # denied if user not found OR we found user but doens have secure cookie
-	    if (@current_nurse.nil?)
+	    if (@nurse.nil?)
 	      access_denied
 	      return false
     	end

@@ -1,1 +1,25 @@
-Dashboard
+<h4>Lista rezervacija</h4>
+<table class="table">
+	<tr>
+		<th>Ime</th>
+		<th>Prezime</th>
+		<th>Godiste</th>
+		<th>Vrsta pregleda</th>
+		<th>Doktor</th>
+		<th>Vrijeme</th>
+		<th>Izmjeni</th>
+		<th>Obrisi</th>
+	</tr>
+	<% @reservations.each do |reservation| %>
+		<tr>
+			<td><%= reservation.first_name %></td>
+			<td><%= reservation.last_name %></td>
+			<td><%= reservation.birthday %></td>
+			<td><%= reservation.examination.name %></td>
+			<td><%= reservation.doctor.full_name %></td>
+			<td><%= reservation.examination_time.examination_time %></td>
+			<td></td>
+			<td></td>
+		</tr>
+	<% end %>
+</table>

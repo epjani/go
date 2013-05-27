@@ -1,0 +1,26 @@
+<a data-toggle="modal" href="<%=new_nurse_doctor_path(@nurse.id)%>" data-target="#myModal" class="add_new_item">Dodaj novog doktora</a>
+<table class="table">
+	<tr>
+		<th>Ime</th>
+		<th>Prezime</th>
+		<th>Uredi</th>
+		<th>Izbrisi</th>
+	</tr>
+	<% @doctors.each do |doctor| %>
+		<tr>
+			<td><%= doctor.first_name %></td>
+			<td><%= doctor.last_name %></td>
+			<td><%= link_to 'Izmjeni', edit_nurse_doctor_path(@nurse.id, doctor.id) %></td>
+			<td><a href="<%=nurse_doctor_path(@nurse.id, doctor.id)%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>
+		</tr>
+	<% end %>
+</table>
+<script>
+	$(document).ready(function(){
+		$('a[data-toggle=modal]').click(function(){
+			target = $(this).attr("data-target");
+			url = $(this).attr("href");
+			$(target).load(url);
+		});
+	});
+</script>

@@ -11,3 +11,9 @@
  *= require_self
  *= require_tree .
  */
+.add_new_item{
+	margin-left:8px;
+}
+.doctors_sideview{
+	list-style-type: none;
+}
