@@ -15,12 +15,3 @@
 		</tr>
 	<% end %>
 </table>
-<script>
-	$(document).ready(function(){
-		$('a[data-toggle=modal]').click(function(){
-			target = $(this).attr("data-target");
-			url = $(this).attr("href");
-			$(target).load(url);
-		});
-	});
-</script>
