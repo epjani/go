@@ -44,7 +44,7 @@
                 <div class="span4"></div>
                 <div class="span4">
                     <%= form_tag nurses_login_path(), :method => 'POST' do%>
-						<%= label_tag :username %>
+						<%= label_tag :username ,"Username" ,{:class=>"proba"} %>
 						<%= text_field_tag (:username) %>
 						<%= label_tag :password %>
 						<%= password_field_tag (:password) %><br />
