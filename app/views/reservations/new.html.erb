@@ -8,10 +8,11 @@
 		<input type="text" name="last_name" placeholder="Prezime" />
 		<input type="text" name="birthday" placeholder="Godiste" />
 		<input type="text" name="phone" placeholder="Telefon" />
+		<input type="text" name="reservation_date_1" placeholder="Datum rezervacije" value="<%=@reservation_date%>" disabled />
+		<input type="hidden" name="reservation_date" placeholder="Datum rezervacije" value="<%=@reservation_date%>" />
 		<select name="doctor_id">
-			<option value="-1">Izaberi doktora</option>
 			<% @doctors.each do |doctor| %>
-				<option value="<%=doctor.id%>"><%=doctor.full_name%></option>
+				<option value="<%=doctor.id%>" <%="selected" if @doctor_id.to_i == doctor.id.to_i%>><%=doctor.full_name%></option>
 			<% end %>
 		</select>
 		<select name="examination_id">

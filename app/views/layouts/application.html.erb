@@ -23,6 +23,9 @@
         <%= stylesheet_link_tag    "application", :media => "all" %>
   		<%= javascript_include_tag "application" %>
   		<%= csrf_meta_tags %>
+        <link rel="stylesheet" href="/css/ui-lightness/jquery-ui-1.10.3.custom.min.css" />
+
+        
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -37,7 +40,7 @@
                     <a class="brand" href="<%=nurse_dashboard_path(@nurse.id)%>" style="width:166px;">Kartoteka</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li><a data-toggle="modal" href="<%=new_nurse_reservation_path(@nurse.id)%>" data-target="#myModal" class="add_new_item">Rezervisi</a></li>
+                            <li><a id="reservation_path" data-toggle="modal" href="<%=new_nurse_reservation_path(@nurse.id, {:doctor_id => @doctor_id, :selected_date => @selected_date})%>" data-target="#myModal" class="add_new_item">Rezervisi</a></li>
                             <li><a href="#">Pauze</a></li>
                             <li><a href="#">Brisi</a></li>
                             <li><a href="#">Stampaj</a></li>
@@ -64,6 +67,7 @@
                 	<div class="row">
                 		<div class="span" style="width:100%;">
                 			<h4>Kalendar</h4>
+                            <div id="datepicker"></div>
                 		</div>
                 	</div>
                 	<div class="row">
@@ -71,7 +75,7 @@
                 			<h4>Doktori</h4>
                             <ul class="doctors_sideview">
                             <% @doctors.each do |doctor| %>
-                                <li><%=doctor.full_name%></li>
+                                <li id="<%=doctor.id%>" <%='class=active' if doctor.id == params[:doctor_id].to_i%>><a href="#" onclick="change_doctor('<%=doctor.id%>');"><%=doctor.full_name%></a></li>
                             <% end %>
                             </ul>
                 		</div>
@@ -88,13 +92,47 @@
         <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="/js/vendor/bootstrap.min.js"></script>
         <script src="/js/main.js"></script>
+        <script type="text/javascript" src="/js/jquery-ui-1.10.3.custom.min.js"></script>
         <script>
-
-                $('a[data-toggle=modal]').click(function(){
-                    target = $(this).attr("data-target");
-                    url = $(this).attr("href");
-                    $(target).load(url);
+            
+            $(document).ready(function(){
+                $("#datepicker").datepicker({
+                    onSelect: function(){
+                        get_dashboard_for_params();
+                    }
                 });
+                <% if params[:controller] == 'dashboard' && params[:action] == 'index' %>
+                    get_dashboard_for_params();
+                <% end %>
+            });
+            
+            $('a[data-toggle=modal]').click(function(){
+                target = $(this).attr("data-target");
+                url = $(this).attr("href");
+                $(target).load(url);
+            });
+
+            __selected_date = '';
+            function get_dashboard_for_params(){
+                var day1 = $("#datepicker").datepicker('getDate').getDate();                 
+                var month1 = $("#datepicker").datepicker('getDate').getMonth() + 1;             
+                var year1 = $("#datepicker").datepicker('getDate').getFullYear();
+                __selected_date = year1 + "/" + month1 + "/" + day1;
+                var doctor_id = $('.doctors_sideview li.active').attr("id");
+                $.ajax({
+                    url : '/nurses/<%=@nurse.id%>/dashboard?doctor_id=' + doctor_id + '&selected_date=' + __selected_date,
+                    type : 'GET',
+                    success : function(data){
+                        $("#main_container").html(data);
+                    }
+                });
+            }
+            
+            function change_doctor(doctor_id){
+                $(".doctors_sideview li.active").removeClass('active');
+                $(".doctors_sideview li#" + doctor_id).addClass('active');
+                get_dashboard_for_params();
+            }
 
         </script>
     </body>

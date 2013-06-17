@@ -1,7 +1,11 @@
 class ApplicationController < BaseController
 	before_filter :login_required
   	protect_from_forgery
-
+  	
+  	def self.disable_layout_for_ajax(layout_name = 'application')
+    	layout Proc.new { |controller| controller.request.xhr? ? nil : layout_name }    
+  	end
+  	
   	private
 
 	def login_required

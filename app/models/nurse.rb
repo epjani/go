@@ -69,26 +69,40 @@ class Nurse < ActiveRecord::Base
 
 	# => Reservation
 
-	def get_reservations
-		# => TODO get reservations for today
-		Reservation.all
-	end
-
-	def create_reservation(first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id)
-		if self.is_admin? || self.is_main?
-			reservation = Reservation.new
-			reservation.first_name = first_name
-			reservation.last_name = last_name
-			reservation.phone = phone
-			reservation.birthday = birthday
-			reservation.doctor_id = doctor_id
-			reservation.examination_id = examination_id
-			reservation.examination_time_id = examination_time_id
-			reservation.nurse_id = self.id
-			reservation.save
+	def get_reservations(selected_date = nil, doctor_id = nil)
+		if selected_date.blank? || doctor_id.blank?
+			Reservation.all
+		else
+			Reservation.where({:doctor_id => doctor_id, :reservation_date => selected_date})
 		end
 	end
 
+	def create_reservation(first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
+		if self.is_admin? || self.is_main?
+			reservation = Reservation.new
+			manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
+		end
+	end
+
+	def edit_reservation(id, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
+		if self.is_admin? || self.is_main?
+			reservation = Reservation.find(id)
+			manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
+		end
+	end
+
+	def manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
+		reservation.first_name = first_name
+		reservation.last_name = last_name
+		reservation.phone = phone
+		reservation.birthday = birthday
+		reservation.doctor_id = doctor_id
+		reservation.examination_id = examination_id
+		reservation.examination_time_id = examination_time_id
+		reservation.nurse_id = self.id
+		reservation.reservation_date = reservation_date.to_date
+		reservation.save
+	end
 	# => ExaminationTime
 	def get_examination_times
 		ExaminationTime.all

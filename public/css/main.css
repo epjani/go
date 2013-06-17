@@ -6,8 +6,13 @@
 
 
 
+.ui-datepicker {
+	width: 190px !important; /*what ever width you want*/
+}
 
-
+.doctors_sideview li.active a{
+	color:#000;
+}
 
 
 

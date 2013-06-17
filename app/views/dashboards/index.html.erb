@@ -20,8 +20,11 @@
 			<td><%= reservation.doctor.full_name %></td>
 			<td><%= reservation.examination_time.examination_time %></td>
 			<td>Glavna sestra</td>
-			<td></td>
+			<td><a data-toggle="modal" data-target="#myModal" href="<%=edit_nurse_reservation_path(@nurse.id, reservation.id)%>">Izmjeni</a></td>
 			<td></td>
 		</tr>
 	<% end %>
 </table>
+<script>
+	$("#reservation_path").attr("href", "<%=new_nurse_reservation_path(@nurse.id, {:doctor_id => @doctor_id, :selected_date => @selected_date}).html_safe%>");
+</script>
