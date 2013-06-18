@@ -12,17 +12,31 @@
 		<th>Obrisi</th>
 	</tr>
 	<% @reservations.each do |reservation| %>
-		<tr>
-			<td><%= reservation.first_name %></td>
-			<td><%= reservation.last_name %></td>
-			<td><%= reservation.birthday %></td>
-			<td><%= reservation.examination.name %></td>
-			<td><%= reservation.doctor.full_name %></td>
-			<td><%= reservation.examination_time.examination_time %></td>
-			<td>Glavna sestra</td>
-			<td><a data-toggle="modal" data-target="#myModal" href="<%=edit_nurse_reservation_path(@nurse.id, reservation.id)%>">Izmjeni</a></td>
-			<td></td>
-		</tr>
+		<% if reservation[:reservation].blank? %>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><%= reservation[:examination_time].examination_time %></td>
+				<td></td>
+				<td><a data-toggle="modal" data-target="#myModal" href="<%=new_nurse_reservation_path(@nurse.id, {:doctor_id => @doctor_id, :selected_date => @selected_date, :examination_time => reservation[:examination_time].id})%>">Rezervisi</a></td>
+				<td></td>
+			</tr>
+		<% else %>
+			<tr>
+				<td><%= reservation[:reservation].first_name %></td>
+				<td><%= reservation[:reservation].last_name %></td>
+				<td><%= reservation[:reservation].birthday %></td>
+				<td><%= reservation[:reservation].examination.name %></td>
+				<td><%= reservation[:reservation].doctor.full_name %></td>
+				<td><%= reservation[:examination_time].examination_time %></td>
+				<td>Glavna sestra</td>
+				<td><a data-toggle="modal" data-target="#myModal" href="<%=edit_nurse_reservation_path(@nurse.id, reservation[:reservation].id)%>">Izmjeni</a></td>
+				<td><a href="<%=nurse_reservation_path(@nurse.id, reservation[:reservation].id)%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>
+			</tr>
+		<% end %>
 	<% end %>
 </table>
 <script>

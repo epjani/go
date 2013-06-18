@@ -24,7 +24,7 @@
 		<select name="examination_time_id">
 			<option value="-1">Izaberi termin pregleda</option>
 			<% @examination_times.each do |et| %>
-				<option value="<%=et.id%>"><%=et.examination_time%></option>
+				<option value="<%=et.id%>" <%="selected" if @examination_time.to_i == et.id%>><%=et.examination_time%></option>
 			<% end %>
 		</select>
 		<button class="btn btn-primary" type="submit">Kreiraj</button>

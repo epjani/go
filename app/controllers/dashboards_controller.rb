@@ -1,5 +1,5 @@
 class DashboardsController < ApplicationController
-	disable_layout_for_ajax
+
 	def index
 		@doctors = @nurse.get_doctors
 		@selected_date = params[:selected_date].blank? ? nil : params[:selected_date].to_date

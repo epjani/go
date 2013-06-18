@@ -71,12 +71,29 @@ class Nurse < ActiveRecord::Base
 
 	def get_reservations(selected_date = nil, doctor_id = nil)
 		if selected_date.blank? || doctor_id.blank?
-			Reservation.all
+			reservations = Reservation.all
 		else
-			Reservation.where({:doctor_id => doctor_id, :reservation_date => selected_date})
+			reservations = Reservation.where({:doctor_id => doctor_id, :reservation_date => selected_date})
 		end
+		get_structured_reservations(reservations)
 	end
 
+	def get_structured_reservations(reservations)
+		examination_times = ExaminationTime.all
+
+		structed_reservations = []
+
+		examination_times.each do |et|
+			structed_reservations << {:examination_time => et}
+			reservations.each do |r|
+				if r.examination_time_id == et.id
+					structed_reservations.last.merge!({:reservation => r})
+				end
+			end
+		end
+				
+		return structed_reservations
+	end
 	def create_reservation(first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
 		if self.is_admin? || self.is_main?
 			reservation = Reservation.new
@@ -91,6 +108,10 @@ class Nurse < ActiveRecord::Base
 		end
 	end
 
+	def delete_reservation(reservation_id)
+		Reservation.delete reservation_id if self.is_admin? || self.is_main?
+	end
+	
 	def manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
 		reservation.first_name = first_name
 		reservation.last_name = last_name
