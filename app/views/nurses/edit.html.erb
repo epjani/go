@@ -1,0 +1,14 @@
+<div class="modal-header">
+   	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+   	<h3 id="myModalLabel">Izmjeni postojecu sestru</h3>
+</div>
+<div class="modal-body">
+	<%= form_tag nurse_path(@nurse.id, {:selected_nurse => @selected_nurse.id}), :method => 'PUT' do%>
+		<input type="text" name="first_name" placeholder="Ime" value="<%=@selected_nurse.first_name%>"/>
+		<input type="text" name="last_name" placeholder="Prezime" value="<%=@selected_nurse.last_name%>"/>
+		<input type="text" name="mobile_phone" placeholder="Mobitel" value="<%=@selected_nurse.mobile_phone%>" />
+		<input type="text" name="home_phone" placeholder="Telefon" value="<%=@selected_nurse.home_phone%>"/>
+		<input type="hidden" name="nurse_id" value="<%=params[:nurse_id]%>" />	
+		<button class="btn btn-primary" type="submit">Izmjeni</button>
+	<% end %>
+</div>

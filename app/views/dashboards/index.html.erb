@@ -1,4 +1,5 @@
-<h4>Lista rezervacija</h4>
+<h4 class="hide_on_print">Lista rezervacija</h4>
+<h4 class="show_on_print"><%=@doctor_name%></h4>
 <table class="table">
 	<tr>
 		<th>Ime</th>
@@ -8,8 +9,8 @@
 		<th>Doktor</th>
 		<th>Vrijeme</th>
 		<th>Sestra</th>
-		<th>Izmjeni</th>
-		<th>Obrisi</th>
+		<th class="hide_on_print">Izmjeni</th>
+		<th class="hide_on_print">Obrisi</th>
 	</tr>
 	<% @reservations.each do |reservation| %>
 		<% if reservation[:reservation].blank? %>
@@ -20,8 +21,8 @@
 				<td></td>
 				<td></td>
 				<td><%= reservation[:examination_time].examination_time %></td>
-				<td></td>
-				<td><a data-toggle="modal" data-target="#myModal" href="<%=new_nurse_reservation_path(@nurse.id, {:doctor_id => @doctor_id, :selected_date => @selected_date, :examination_time => reservation[:examination_time].id})%>">Rezervisi</a></td>
+				<td class="hide_on_print"></td>
+				<td class="hide_on_print"><a data-toggle="modal" data-target="#myModal" href="<%=new_nurse_reservation_path(@nurse.id, {:doctor_id => @doctor_id, :selected_date => @selected_date, :examination_time => reservation[:examination_time].id})%>">Rezervisi</a></td>
 				<td></td>
 			</tr>
 		<% else %>
@@ -32,9 +33,11 @@
 				<td><%= reservation[:reservation].examination.name %></td>
 				<td><%= reservation[:reservation].doctor.full_name %></td>
 				<td><%= reservation[:examination_time].examination_time %></td>
-				<td>Glavna sestra</td>
-				<td><a data-toggle="modal" data-target="#myModal" href="<%=edit_nurse_reservation_path(@nurse.id, reservation[:reservation].id)%>">Izmjeni</a></td>
-				<td><a href="<%=nurse_reservation_path(@nurse.id, reservation[:reservation].id)%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>
+				<td><%= reservation[:reservation].nurse.full_name%></td>
+				<% if @nurse.can_change_reservation?(reservation[:reservation]) %>
+					<td><a class="hide_on_print" data-toggle="modal" data-target="#myModal" href="<%=edit_nurse_reservation_path(@nurse.id, reservation[:reservation].id)%>">Izmjeni</a></td>
+					<td><a class="hide_on_print" href="<%=nurse_reservation_path(@nurse.id, reservation[:reservation].id)%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>
+				<% end %>
 			</tr>
 		<% end %>
 	<% end %>

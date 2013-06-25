@@ -42,16 +42,20 @@
                         <ul class="nav">
                             <li><a id="reservation_path" data-toggle="modal" href="<%=new_nurse_reservation_path(@nurse.id, {:doctor_id => @doctor_id, :selected_date => @selected_date})%>" data-target="#myModal" class="add_new_item">Rezervisi</a></li>
                             <li><a href="#">Pauze</a></li>
-                            <li><a href="#">Stampaj</a></li>
+                            <li><a href="#" onclick="<%='window.print();' if params[:controller] == 'dashboards' && params[:action] == 'index' %>">Stampaj</a></li>
                             <li><a href="#">Pretraga</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Glavna sestra <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="<%=nurse_doctors_path(@nurse.id)%>">Doktori</a></li>
-                                    <li><a href="#">Sestre</a></li>
-                                    <li><a href="<%=nurse_examinations_path(@nurse.id)%>">Vrste pregleda</a></li>
-                                </ul>
-                            </li>
+                            <% if @nurse.is_admin? || @nurse.is_main? %>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=@nurse.full_name%> <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<%=nurse_doctors_path(@nurse.id)%>">Doktori</a></li>
+                                        <li><a href="<%=nurse_list_path(@nurse.id)%>">Sestre</a></li>
+                                        <li><a href="<%=nurse_examinations_path(@nurse.id)%>">Vrste pregleda</a></li>
+                                    </ul>
+                                </li>
+                            <% else %>
+                            <li><a href="#"><%= @nurse.full_name %></a></li>
+                            <% end %>
                             <li><a href="<%=nurse_logout_path(@nurse.id)%>">Odjava</a></li>              
                         </ul>
                     </div><!--/.nav-collapse -->                   
@@ -62,7 +66,7 @@
         <div class="container">
             <!-- Example row of columns -->
             <div class="row">
-                <div class="span2">
+                <div class="span2 hide_on_print">
                 	<div class="row">
                 		<div class="span" style="width:100%;">
                 			<h4>Kalendar</h4>

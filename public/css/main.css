@@ -13,8 +13,11 @@
 .doctors_sideview li.active a{
 	color:#000;
 }
-
-
+.show_on_print{display: none;}
+@media print{
+	.show_on_print{display: block;}
+	.navbar-inner, .hide_on_print{display: none;}
+}
 
 
 

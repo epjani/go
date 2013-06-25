@@ -1,0 +1,26 @@
+<a data-toggle="modal" href="<%=new_nurse_path({:nurse_id => @nurse.id})%>" data-target="#myModal" class="add_new_item">Dodaj novu sestru</a>
+<table class="table">
+	<tr>
+		<th>Ime</th>
+		<th>Prezime</th>
+		<th>Email</th>
+		<th>Mobitel</th>
+		<th>Telefon</th>
+		<th>Korisnicko ime</th>
+		<th>Izmjeni</th>
+		<th>Izbrisi</th>
+	</tr>
+	<% @nurses.each do |nurse| %>
+		<tr>
+			<td><%= nurse.first_name %></td>
+			<td><%= nurse.last_name %></td>
+			<td><%= nurse.email %></td>
+			<td><%= nurse.mobile_phone %></td>
+			<td><%= nurse.home_phone %></td>
+			<td><%= nurse.username %></td>
+			<td><a href="<%=edit_nurse_path(@nurse.id, {:selected_nurse =>nurse.id, :nurse_id => @nurse.id}) %>" data-toggle="modal" data-target="#myModal">Izmjeni</a></td>
+			<td><a href="<%=nurse_path(@nurse.id, {:nurse_id => @nurse.id, :selected_nurse => nurse.id})%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>
+		</tr>
+	<% end %>
+</table>
+

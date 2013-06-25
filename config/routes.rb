@@ -61,7 +61,7 @@ Ginekologija::Application.routes.draw do
 
   resources :nurses do
     match 'logout'
-
+    match 'list' => 'nurses#nurse_list'
     resource :dashboard do
       get :index
     end
