@@ -26,7 +26,13 @@
 				<td></td>
 			</tr>
 		<% else %>
+			<% if reservation[:reservation].reservation_type == Examination.pause.id %>
+			<tr style="background:#be2e2e;">
+			<% elsif reservation[:reservation].examination_id == Examination.cito.id %>
+			<tr style="background:#dad841;">
+			<% else %>
 			<tr>
+			<% end %>
 				<td><%= reservation[:reservation].first_name %></td>
 				<td><%= reservation[:reservation].last_name %></td>
 				<td><%= reservation[:reservation].birthday %></td>

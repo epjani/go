@@ -8,14 +8,22 @@ class ReservationsController <  ApplicationController
 	def new
 		@doctors = @nurse.get_doctors
 		@examinations = @nurse.get_examinations
-		@examination_times = @nurse.get_examination_times
+		
 		@reservation_date = params[:selected_date]
-		@doctor_id = params[:doctor_id].blank? ? nil : params[:doctor_id]
+		@doctor_id = params[:doctor_id].blank? ? @doctors.first.id : params[:doctor_id]
+		@examination_times = @nurse.get_examination_times(params[:selected_date], @doctor_id)
 		@examination_time = params[:examination_time].blank? ? nil : params[:examination_time]
+		# => if pause
+		@type = params[:type].blank? ? Examination.standard : params[:type].to_i
+		@examination = Examination.pause
+		puts "params[:type] : #{params[:type]}"
+		puts "@type : #{@type}"
+		puts "Examination.pause : #{Examination.pause}"
 	end
 
 	def create
-		@nurse.create_reservation(params[:first_name], params[:last_name], params[:phone], params[:birthday], params[:doctor_id], params[:examination_id], params[:examination_time_id], params[:reservation_date])
+		reservation_type = params[:type].blank? ? nil : params[:type]
+		@nurse.create_reservation(params[:first_name], params[:last_name], params[:phone], params[:birthday], params[:doctor_id], params[:examination_id], params[:examination_time_id], params[:reservation_date], reservation_type)
 		redirect_to nurse_dashboard_path(@nurse.id, {:doctor_id => params[:doctor_id], :selected_date => params[:reservation_date]})
 	end
 

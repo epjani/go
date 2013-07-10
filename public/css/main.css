@@ -19,9 +19,20 @@
 	.navbar-inner, .hide_on_print{display: none;}
 }
 
+.doctors_sideview li{
+	padding:6px 0 6px 10px;
+}
+.doctors_sideview li.active{
+	background: #ccc;
+}
 
+#main_container{
+	margin-left: 60px;
+}
 
-
+.container{
+	width: 1220px;
+}
 
 
 

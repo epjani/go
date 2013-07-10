@@ -7,11 +7,13 @@
 		<th>Izbrisi</th>
 	</tr>
 	<% @examinations.each do |examination| %>
-		<tr>
-			<td><%= examination.name %></td>
-			<td><%= examination.description %></td>
-			<td><%= link_to 'Izmjeni', edit_nurse_examination_path(@nurse.id, examination.id) %></td>
-			<td><a href="<%=nurse_examination_path(@nurse.id, examination.id)%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>
-		</tr>
+		<% unless examination.id == Examination.pause.id %>
+			<tr>
+				<td><%= examination.name %></td>
+				<td><%= examination.description %></td>
+				<td><%= link_to 'Izmjeni', edit_nurse_examination_path(@nurse.id, examination.id) %></td>
+				<td><a href="<%=nurse_examination_path(@nurse.id, examination.id)%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>
+			</tr>
+		<% end %>
 	<% end %>
 </table>

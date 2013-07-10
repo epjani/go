@@ -111,9 +111,9 @@ class Nurse < ActiveRecord::Base
 				
 		return structed_reservations
 	end
-	def create_reservation(first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
+	def create_reservation(first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type = Examination.standard)
 		reservation = Reservation.new
-		manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
+		manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
 	end
 
 	def edit_reservation(id, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
@@ -127,7 +127,7 @@ class Nurse < ActiveRecord::Base
 		Reservation.delete reservation_id if self.is_admin? || self.is_main?
 	end
 	
-	def manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
+	def manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
 		reservation.first_name = first_name
 		reservation.last_name = last_name
 		reservation.phone = phone
@@ -137,11 +137,15 @@ class Nurse < ActiveRecord::Base
 		reservation.examination_time_id = examination_time_id
 		reservation.nurse_id = self.id
 		reservation.reservation_date = reservation_date.to_date
+		reservation.reservation_type = type
 		reservation.save
 	end
 	# => ExaminationTime
-	def get_examination_times
-		ExaminationTime.all
+	def get_examination_times(selected_date, doctor_id = nil)
+		
+		reservations = Reservation.where({:doctor_id => doctor_id, :reservation_date => selected_date}).select(:examination_time_id).map(&:examination_time_id)
+		examination_times = ExaminationTime.select(:id).map(&:id)
+		ExaminationTime.where(:id => examination_times - reservations)
 	end
 
 	def can_change_reservation?(reservation)

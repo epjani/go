@@ -24,4 +24,11 @@ namespace :populate do
   	ExaminationTime.create({:examination_time => "10:30-10:45"})
   	ExaminationTime.create({:examination_time => "10:45-11:00"})
   end
+
+  task :examinations => :environment do
+    puts "Adding standard reservations (pause/cito)"
+    Examination.create({:name => "Pauza", :description => "Pauza"})
+    Examination.create({:name => "CITO", :description => "CITO"})
+  end
+
 end
