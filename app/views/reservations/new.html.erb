@@ -10,6 +10,7 @@
 					<option value="<%=doctor.id%>" <%="selected" if @doctor_id.to_i == doctor.id.to_i%>><%=doctor.full_name%></option>
 				<% end %>
 			</select>
+			<input name="doctor_id" type="hidden" value="<%=@doctor_id%>" />
 			<input name="examination_id" value="<%=@examination.id%>" type="hidden" />
 			<input name="type" value="<%=Examination.pause.id%>" type="hidden" />
 			<select name="examination_time_id">
@@ -41,10 +42,13 @@
 					<option value="<%=doctor.id%>" <%="selected" if @doctor_id.to_i == doctor.id.to_i%>><%=doctor.full_name%></option>
 				<% end %>
 			</select>
+			<input name="doctor_id" type="hidden" value="<%=@doctor_id%>" />
 			<select name="examination_id">
 				<option value="-1">Izaberi vrstu pregleda</option>
 				<% @examinations.each do |examination| %>
-					<option value="<%=examination.id%>"><%=examination.name%></option>
+					<% unless examination.id == Examination.pause.id %>
+						<option value="<%=examination.id%>"><%=examination.name%></option>
+					<% end %>
 				<% end %>
 			</select>
 			<select name="examination_time_id">

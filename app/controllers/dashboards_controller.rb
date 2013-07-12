@@ -6,6 +6,8 @@ class DashboardsController < ApplicationController
 		@doctor_id = params[:doctor_id].blank? ? (@doctors.empty? ? nil : @doctors.first.id) : params[:doctor_id]
 		@doctor_name = Doctor.find(@doctor_id).full_name if @doctor_id
 		@reservations = @doctors.empty? ? [] : @nurse.get_reservations(@selected_date, @doctor_id)
+		puts "reservations <<<<<<<<<<<<<<<<<"
+		puts @reservations.inspect
 	end
 
 end

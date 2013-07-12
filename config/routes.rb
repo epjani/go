@@ -69,6 +69,9 @@ Ginekologija::Application.routes.draw do
     resources :doctors
     resources :examinations
     resources :reservations
+    resource :search do
+      get :index
+    end
   end
 
 

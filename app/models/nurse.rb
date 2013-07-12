@@ -108,7 +108,7 @@ class Nurse < ActiveRecord::Base
 				end
 			end
 		end
-				
+
 		return structed_reservations
 	end
 	def create_reservation(first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type = Examination.standard)
@@ -158,5 +158,10 @@ class Nurse < ActiveRecord::Base
 
 	def full_name
 		self.first_name + ' ' + self.last_name
+	end
+
+	def search(search_string)
+		search_string = "%" + search_string + "%"
+		reservations = Reservation.where("first_name ILIKE(?) OR last_name ILIKE(?)", search_string, search_string)
 	end
 end
