@@ -137,7 +137,7 @@
                 //         $("#main_container").html(data);
                 //     }
                 // });
-                window.location.href = '/nurses/<%=@nurse.id%>/dashboard?doctor_id=' + doctor_id + '&selected_date=' + __selected_date;
+                window.location.href = '/nurses/<%=@nurse.id%>/dashboard?doctor_id=' + doctor_id + '&selected_date=' + __selected_date + '&shift=' + __shift;
             }
             
             function change_doctor(doctor_id){
@@ -146,6 +146,11 @@
                 get_dashboard_for_params();
             }
 
+            __shift = 1;
+            function change_shift(shift){
+                __shift = shift;
+                get_dashboard_for_params();
+            }
             function set_current_selected_date(){
                 var day1 = $("#datepicker").datepicker('getDate').getDate();                 
                 var month1 = $("#datepicker").datepicker('getDate').getMonth() + 1;             

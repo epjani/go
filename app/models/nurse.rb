@@ -86,17 +86,17 @@ class Nurse < ActiveRecord::Base
 
 	# => Reservation
 
-	def get_reservations(selected_date = nil, doctor_id = nil)
+	def get_reservations(selected_date = nil, doctor_id = nil, shift = 1)
 		if selected_date.blank? || doctor_id.blank?
-			reservations = Reservation.all
+			reservations = Reservation.where(:shift => shift)
 		else
 			reservations = Reservation.where({:doctor_id => doctor_id, :reservation_date => selected_date})
 		end
-		get_structured_reservations(reservations)
+		get_structured_reservations(reservations, shift)
 	end
 
-	def get_structured_reservations(reservations)
-		examination_times = ExaminationTime.all
+	def get_structured_reservations(reservations, shift)
+		examination_times = ExaminationTime.where(:shift => shift)
 
 		structed_reservations = []
 
