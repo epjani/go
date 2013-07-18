@@ -4,7 +4,7 @@
 		<th>Prezime</th>
 		<th>Godiste</th>
 		<th>Vrsta pregleda</th>
-		<th>Doktor</th>
+		<th class="hide_on_print">Doktor</th>
 		<th>Vrijeme</th>
 		<th>Sestra</th>
 		<th class="hide_on_print">Izmjeni</th>
@@ -17,7 +17,7 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<td></td>
+				<td class="hide_on_print"></td>
 				<td><%= reservation[:examination_time].examination_time %></td>
 				<td class="hide_on_print"></td>
 				<td class="hide_on_print"><a data-toggle="modal" data-target="#myModal" href="<%=new_nurse_reservation_path(@nurse.id, {:doctor_id => doctor_id, :selected_date => selected_date, :examination_time => reservation[:examination_time].id})%>">Rezervisi</a></td>
@@ -35,7 +35,7 @@
 				<td><%= reservation[:reservation].last_name %></td>
 				<td><%= reservation[:reservation].birthday %></td>
 				<td><%= reservation[:reservation].examination.name %></td>
-				<td><%= reservation[:reservation].doctor.full_name %></td>
+				<td class="hide_on_print"><%= reservation[:reservation].doctor.full_name %></td>
 				<td><%= reservation[:examination_time].examination_time %></td>
 				<td><%= reservation[:reservation].nurse.full_name%></td>
 				<% if @nurse.can_change_reservation?(reservation[:reservation]) %>

@@ -108,9 +108,9 @@ class Nurse < ActiveRecord::Base
 				end
 			end
 		end
-
 		return structed_reservations
 	end
+
 	def create_reservation(first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type = Examination.standard)
 		reservation = Reservation.new
 		manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
@@ -140,6 +140,7 @@ class Nurse < ActiveRecord::Base
 		reservation.reservation_type = type
 		reservation.save
 	end
+
 	# => ExaminationTime
 	def get_examination_times(selected_date, doctor_id = nil)
 		
@@ -152,7 +153,12 @@ class Nurse < ActiveRecord::Base
 		if self.is_admin? || self.is_main? || reservation.nurse_id == self.id
 			return true
 		else
-			return false
+			reservation_owner_nurse = Nurse.find reservation.nurse_id
+			if reservation_owner_nurse.nurse_role == Nurse::ROLE_BASIC
+				return true
+			else
+				return false
+			end
 		end
 	end
 
@@ -162,6 +168,11 @@ class Nurse < ActiveRecord::Base
 
 	def search(search_string)
 		search_string = "%" + search_string + "%"
-		reservations = Reservation.where("first_name ILIKE(?) OR last_name ILIKE(?)", search_string, search_string)
+		q = ""
+		search_string.split(" ").each do |word|
+			q += "first_name ILIKE('%#{word}%') OR last_name ILIKE('%#{word}%') OR " 
+		end
+		puts "<<<<<<<<<<<<<<<<<<<<<<<<<< #{q[0..-4]}"
+		reservations = Reservation.where(q[0..-4])
 	end
 end

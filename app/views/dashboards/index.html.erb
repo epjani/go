@@ -1,3 +1,3 @@
 <h4 class="hide_on_print">Lista rezervacija</h4>
-<h4 class="show_on_print"><%=@doctor_name%></h4>
+<h4 class="show_on_print"><%=@doctor_name%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@selected_date%></h4>
 <%= render :partial => "shared/reservations", :locals => {:reservations => @reservations, :doctor_id => @doctor_id, :selected_date => @selected_date} %>
