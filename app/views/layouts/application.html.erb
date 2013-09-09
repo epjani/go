@@ -118,6 +118,8 @@
 
                 var doctor_id = $('.doctors_sideview li.active').attr("id");
                 $("#reservation_path").attr("href", "/nurses/<%=@nurse.id%>/reservations/new?doctor_id=<%=params[:doctor_id]%>&selected_date=" + __selected_date);
+                temp_shift = getParameterByName("shift");
+
             });
             
             $('a[data-toggle=modal]').click(function(){
@@ -127,6 +129,7 @@
             });
 
             __selected_date = '';
+            __shift = '';
             function get_dashboard_for_params(){
                 set_current_selected_date();
                 var doctor_id = $('.doctors_sideview li.active').attr("id");
@@ -137,6 +140,8 @@
                 //         $("#main_container").html(data);
                 //     }
                 // });
+                console.log(__shift);
+                if (__shift == null || __shift == '' || __shift == 'null'){__shift=$(".shift.active").attr("id");}
                 window.location.href = '/nurses/<%=@nurse.id%>/dashboard?doctor_id=' + doctor_id + '&selected_date=' + __selected_date + '&shift=' + __shift;
             }
             
@@ -146,8 +151,8 @@
                 get_dashboard_for_params();
             }
 
-            __shift = 1;
-            function change_shift(shift){
+            
+            function change_shift(shift){                
                 __shift = shift;
                 get_dashboard_for_params();
             }
@@ -156,6 +161,13 @@
                 var month1 = $("#datepicker").datepicker('getDate').getMonth() + 1;             
                 var year1 = $("#datepicker").datepicker('getDate').getFullYear();
                 __selected_date = year1 + "/" + month1 + "/" + day1;
+            }
+
+            function getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+                return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
             }
         </script>
     </body>

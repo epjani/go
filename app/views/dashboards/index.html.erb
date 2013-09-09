@@ -1,9 +1,9 @@
 <h4 class="hide_on_print">Lista rezervacija	
-	<a href="#" style="margin-left:10px;float:right;<%=@shift == 2 ? '' : 'color:#ddd;' %>" onclick="change_shift('2')">2</a>
-	<a href="#" style="float:right;<%=@shift == 1 ? '' : 'color:#ddd;' %>" onclick="change_shift('1')">1</a>
+	<a href="#" id="2" class="shift <%=@shift == 2 ? "active" : ''%>" style="margin-left:10px;float:right;<%=@shift == 2 ? '' : 'color:#ddd;' %>" onclick="change_shift('2')">2</a>
+	<a href="#" id="1" class="shift <%=@shift == 1 ? "active" : ''%>" style="float:right;<%=@shift == 1 ? '' : 'color:#ddd;' %>" onclick="change_shift('1')">1</a>
 	<div style="float:right;margin-right:10px;">Smjena: </div>
 </h4>
 <h4 class="show_on_print" style="float:left;">
 	<%=@doctor_name%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@selected_date%>
 </h4>
-<%= render :partial => "shared/reservations", :locals => {:reservations => @reservations, :doctor_id => @doctor_id, :selected_date => @selected_date} %>
+<%= render :partial => "shared/reservations", :locals => {:reservations => @reservations, :doctor_id => @doctor_id, :selected_date => @selected_date, :shift => @shift} %>

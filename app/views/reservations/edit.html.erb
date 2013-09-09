@@ -10,6 +10,7 @@
 		<input type="text" name="phone" placeholder="Telefon" value="<%=@reservation.phone%>"/>
 		<input type="text" name="reservation_date_1" placeholder="Datum rezervacije" value="<%=@reservation.reservation_date%>" disabled />
 		<input type="hidden" name="reservation_date" placeholder="Datum rezervacije" value="<%=@reservation.reservation_date%>" />
+		<input type="hidden" name="shift" value="<%=params[:shift]%>" />
 		<select name="doctor_id">
 			<% @doctors.each do |doctor| %>
 				<option value="<%=doctor.id%>" <%="selected" if @reservation.doctor_id == doctor.id%>><%=doctor.full_name%></option>
@@ -27,6 +28,7 @@
 				<option value="<%=et.id%>" <%="selected" if et.id == @reservation.examination_time_id%>><%=et.examination_time%></option>
 			<% end %>
 		</select>
+		<input type="hidden" name="type" value="<%=@reservation.reservation_type%>" />
 		<button class="btn btn-primary" type="submit">Izmjeni</button>
 	<% end %>
 </div>

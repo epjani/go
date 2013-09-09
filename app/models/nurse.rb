@@ -66,6 +66,13 @@ class Nurse < ActiveRecord::Base
 		Doctor.delete doctor_id if self.is_admin? || self.is_main?
 	end
 
+	def edit_doctor(doctor_id, first_name, last_name)
+		doctor = Doctor.find doctor_id
+		doctor.first_name = first_name
+		doctor.last_name = last_name
+		doctor.save
+	end
+
 	# => Examination
 	def create_examination(name, description)
 		if self.is_main? || self.is_admin?
@@ -116,10 +123,10 @@ class Nurse < ActiveRecord::Base
 		manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
 	end
 
-	def edit_reservation(id, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
+	def edit_reservation(id, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
 		if self.is_admin? || self.is_main?
 			reservation = Reservation.find(id)
-			manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date)
+			manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
 		end
 	end
 
@@ -142,11 +149,10 @@ class Nurse < ActiveRecord::Base
 	end
 
 	# => ExaminationTime
-	def get_examination_times(selected_date, doctor_id = nil)
-		
+	def get_examination_times(selected_date, doctor_id = nil, shift = 1)
 		reservations = Reservation.where({:doctor_id => doctor_id, :reservation_date => selected_date}).select(:examination_time_id).map(&:examination_time_id)
 		examination_times = ExaminationTime.select(:id).map(&:id)
-		ExaminationTime.where(:id => examination_times - reservations)
+		ExaminationTime.where(:id => examination_times - reservations, :shift => shift)
 	end
 
 	def can_change_reservation?(reservation)

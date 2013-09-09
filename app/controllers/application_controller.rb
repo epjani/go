@@ -1,7 +1,14 @@
 class ApplicationController < BaseController
 	before_filter :login_required
+	# before_filter :set_shift
   	protect_from_forgery
   	
+  	def set_shift
+  		unless params[:shift].blank?
+  			cookies[:shift] = { :value => params[:shift], :expires => Time.now + 6.hours}
+  		end
+  	end
+
   	def self.disable_layout_for_ajax(layout_name = 'application')
     	layout Proc.new { |controller| controller.request.xhr? ? nil : layout_name }    
   	end

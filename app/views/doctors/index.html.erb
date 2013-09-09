@@ -10,7 +10,7 @@
 		<tr>
 			<td><%= doctor.first_name %></td>
 			<td><%= doctor.last_name %></td>
-			<td><%= link_to 'Izmjeni', edit_nurse_doctor_path(@nurse.id, doctor.id) %></td>
+			<td><a href="<%=edit_nurse_doctor_path(@nurse.id, doctor.id) %>" data-toggle="modal" data-target="#myModal">Izmjeni</a></td>
 			<td><a href="<%=nurse_doctor_path(@nurse.id, doctor.id)%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>
 		</tr>
 	<% end %>

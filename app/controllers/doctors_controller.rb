@@ -17,4 +17,13 @@ class DoctorsController <  ApplicationController
 		@nurse.delete_doctor(params[:id])
 		redirect_to nurse_doctors_path(@nurse.id)
 	end
+
+	def edit
+		@selected_doctor = Doctor.find params[:id]
+	end
+
+	def update
+		@nurse.edit_doctor(params[:selected_doctor], params[:first_name], params[:last_name])
+		redirect_to nurse_doctors_path(params[:nurse_id])
+	end
 end
