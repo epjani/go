@@ -11,7 +11,9 @@
 		<input type="text" name="home_phone" placeholder="Telefon" />
 		<input type="text" name="username" placeholder="Korisnicko ime" />
 		<input type="password" name="password" placeholder="Lozinka" />
+		<div style="clear:both;"></div>
+		<label style="float:left;">Administrator</label><input style="float:left;margin-left:10px;" type="checkbox" name="admin" />
 		<input type="hidden" name="nurse_id" value="<%=params[:nurse_id]%>" />
-		<button class="btn btn-primary" type="submit">Kreiraj</button>
+		<button class="btn btn-primary" style="float:right;" type="submit">Kreiraj</button>
 	<% end %>
 </div>

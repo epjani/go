@@ -33,7 +33,7 @@ class Nurse < ActiveRecord::Base
 	end
 
 	def get_nurses
-		Nurse.where("nurse_role != ?", Nurse::ROLE_ADMIN)
+		Nurse.all
 	end
 	# => Nurse checkers
 	def is_admin?

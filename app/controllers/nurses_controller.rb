@@ -15,7 +15,8 @@ class NursesController < BaseController
 	def create
 		if is_logged_nurse?
 			@nurse = Nurse.find params[:nurse_id]
-			@nurse.create_nurse(params[:first_name], params[:last_name], params[:email], params[:mobile_phone], params[:home_phone], params[:username], params[:password])
+			nurse_role = params[:admin] == "on" ? Nurse::ROLE_ADMIN : Nurse::ROLE_BASIC
+			@nurse.create_nurse(params[:first_name], params[:last_name], params[:email], params[:mobile_phone], params[:home_phone], params[:username], params[:password], nurse_role)
 		end
 		redirect_to nurse_list_path(params[:nurse_id])
 	end
