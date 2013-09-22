@@ -124,10 +124,10 @@ class Nurse < ActiveRecord::Base
 	end
 
 	def edit_reservation(id, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
-		if self.is_admin? || self.is_main?
+		# if self.is_admin? || self.is_main?
 			reservation = Reservation.find(id)
 			manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
-		end
+		# end
 	end
 
 	def delete_reservation(reservation_id)
@@ -176,9 +176,9 @@ class Nurse < ActiveRecord::Base
 		search_string = "%" + search_string + "%"
 		q = ""
 		search_string.split(" ").each do |word|
-			q += "first_name ILIKE('%#{word}%') OR last_name ILIKE('%#{word}%') OR " 
+			q += "first_name ILIKE('%#{word}%') AND last_name ILIKE('%#{word}%') AND " 
 		end
-		puts "<<<<<<<<<<<<<<<<<<<<<<<<<< #{q[0..-4]}"
-		reservations = Reservation.where(q[0..-4])
+		puts "<<<<<<<<<<<<<<<<<<<<<<<<<< #{q[0..-5]}"
+		reservations = Reservation.where(q[0..-5])
 	end
 end
