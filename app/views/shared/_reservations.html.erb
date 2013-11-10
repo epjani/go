@@ -6,11 +6,15 @@
 		<th>Vrsta pregleda</th>
 		<th>Vrijeme</th>
 		<th>Sestra</th>
+		<% if search %>
+			<th>Datum</th>
+		<% end %>
 		<th class="hide_on_print">Izmjeni</th>
 		<th class="hide_on_print">Obrisi</th>
 	</tr>
 	<% reservations.each do |reservation| %>
-		<% if reservation[:reservation].blank? %>
+		<% if reservation[:reservation].nil? %>
+			<% unless search %>
 			<tr>
 				<td></td>
 				<td></td>
@@ -22,6 +26,7 @@
 				<td class="hide_on_print"><a data-toggle="modal" data-target="#myModal" href="<%=new_nurse_reservation_path(@nurse.id, {:doctor_id => doctor_id, :selected_date => selected_date, :examination_time => reservation[:examination_time].id, :shift => shift})%>">Rezervisi</a></td>
 				<td></td>
 			</tr>
+			<% end %>
 		<% else %>
 			<% if reservation[:reservation].reservation_type == Examination.pause.id %>
 			<tr style="background:#be2e2e;">
@@ -33,9 +38,12 @@
 				<td><%= reservation[:reservation].first_name %></td>
 				<td><%= reservation[:reservation].last_name %></td>
 				<td><%= reservation[:reservation].birthday %></td>
-				<td><%= reservation[:reservation].examination.name %></td>
+				<td><%= reservation[:reservation].examination.nil? ? '' : reservation[:reservation].examination.name %></td>
 				<td><%= reservation[:examination_time].examination_time %></td>
 				<td><%= reservation[:reservation].nurse.full_name%></td>
+				<% if search %>
+					<td><%= reservation[:reservation].reservation_date %></td>
+				<% end %>
 				<% if @nurse.can_change_reservation?(reservation[:reservation]) %>
 					<td><a class="hide_on_print" data-toggle="modal" data-target="#myModal" href="<%=edit_nurse_reservation_path(@nurse.id, reservation[:reservation].id, :shift => shift)%>">Izmjeni</a></td>
 					<td><a class="hide_on_print" href="<%=nurse_reservation_path(@nurse.id, reservation[:reservation].id, {:shift => shift, :doctor_id => doctor_id, :selected_date => selected_date})%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>

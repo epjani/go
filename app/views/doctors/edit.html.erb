@@ -3,10 +3,11 @@
    	<h3 id="myModalLabel">Izmjeni postojeceg doktora</h3>
 </div>
 <div class="modal-body">
-	<%= form_tag nurse_doctor_path(@nurse.id, {:selected_doctor => @selected_doctor.id}), :method => 'PUT' do%>
-		<input type="text" name="first_name" placeholder="Ime" value="<%=@selected_doctor.first_name%>"/>
-		<input type="text" name="last_name" placeholder="Prezime" value="<%=@selected_doctor.last_name%>"/>
+	<%= form_tag nurse_doctor_path(@nurse.id, {:selected_doctor => @selected_doctor.id}), :method => 'PUT', :class => 'validate' do%>
+		<input type="text" name="first_name" id="first_name" placeholder="Ime" value="<%=@selected_doctor.first_name%>"/>
+		<input type="text" name="last_name" id="last_name" placeholder="Prezime" value="<%=@selected_doctor.last_name%>"/>
 		<input type="hidden" name="nurse_id" value="<%=params[:nurse_id]%>" />	
 		<button class="btn btn-primary" type="submit">Izmjeni</button>
 	<% end %>
 </div>
+<script>fakeDocumentReady();</script>

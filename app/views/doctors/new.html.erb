@@ -3,9 +3,10 @@
    	<h3 id="myModalLabel">Dodaj novog doktora</h3>
 </div>
 <div class="modal-body">
-	<%= form_tag nurse_doctors_path(@nurse.id), :method => 'POST' do%>
+	<%= form_tag nurse_doctors_path(@nurse.id), :method => 'POST', :class => 'validate' do%>
 		<input type="text" name="first_name" placeholder="Ime" />
 		<input type="text" name="last_name" placeholder="Prezime" />
 		<button class="btn btn-primary" type="submit">Kreiraj</button>
 	<% end %>
 </div>
+<script>fakeDocumentReady();</script>

@@ -102,8 +102,12 @@ class Nurse < ActiveRecord::Base
 		get_structured_reservations(reservations, shift)
 	end
 
-	def get_structured_reservations(reservations, shift)
-		examination_times = ExaminationTime.where(:shift => shift)
+	def get_structured_reservations(reservations, shift = nil)
+		unless shift.nil?
+			examination_times = ExaminationTime.where(:shift => shift)
+		else
+			examination_times = ExaminationTime.all
+		end
 
 		structed_reservations = []
 
@@ -131,7 +135,9 @@ class Nurse < ActiveRecord::Base
 	end
 
 	def delete_reservation(reservation_id)
-		Reservation.delete reservation_id if self.is_admin? || self.is_main?
+		reservation = Reservation.find reservation_id
+		reservation_nurse = Nurse.find reservation.nurse_id
+		Reservation.delete reservation_id if self.is_admin? || self.is_main? || reservation_nurse.nurse_role == Nurse::ROLE_BASIC
 	end
 	
 	def manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
@@ -173,12 +179,7 @@ class Nurse < ActiveRecord::Base
 	end
 
 	def search(search_string)
-		search_string = "%" + search_string + "%"
-		q = ""
-		search_string.split(" ").each do |word|
-			q += "first_name ILIKE('%#{word}%') AND last_name ILIKE('%#{word}%') AND " 
-		end
-		puts "<<<<<<<<<<<<<<<<<<<<<<<<<< #{q[0..-5]}"
-		reservations = Reservation.where(q[0..-5])
+		search_string = search_string.split(' ')
+		reservations = Reservation.where("first_name || ' ' || last_name ILIKE('%#{search_string.join(' ')}%') OR first_name || ' ' || last_name ILIKE('%#{search_string.reverse.join(' ')}%') ")
 	end
 end

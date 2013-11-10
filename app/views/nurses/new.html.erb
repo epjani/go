@@ -3,13 +3,13 @@
    	<h3 id="myModalLabel">Dodaj novu sestru</h3>
 </div>
 <div class="modal-body">
-	<%= form_tag nurses_path(@nurse.id), :method => 'POST' do%>
-		<input type="text" name="first_name" placeholder="Ime" />
-		<input type="text" name="last_name" placeholder="Prezime" />
-		<input type="text" name="email" placeholder="Email" />
-		<input type="text" name="mobile_phone" placeholder="Mobitel" />
-		<input type="text" name="home_phone" placeholder="Telefon" />
-		<input type="text" name="username" placeholder="Korisnicko ime" />
+	<%= form_tag nurses_path(@nurse.id), :method => 'POST', :class => 'validate' do%>
+		<input type="text" id="first_name" name="first_name" placeholder="Ime" />
+		<input type="text" id="last_name" name="last_name" placeholder="Prezime" />
+		<input type="text" id="email" name="email" placeholder="Email" />
+		<input type="text" id="mobile_phone" name="mobile_phone" placeholder="Mobitel" />
+		<input type="text" id="home_phone" name="home_phone" placeholder="Telefon" />
+		<input type="text" id="username" name="username" placeholder="Korisnicko ime" />
 		<input type="password" name="password" placeholder="Lozinka" />
 		<div style="clear:both;"></div>
 		<label style="float:left;">Administrator</label><input style="float:left;margin-left:10px;" type="checkbox" name="admin" />
@@ -17,3 +17,4 @@
 		<button class="btn btn-primary" style="float:right;" type="submit">Kreiraj</button>
 	<% end %>
 </div>
+<script type="text/javascript">fakeDocumentReady();</script>

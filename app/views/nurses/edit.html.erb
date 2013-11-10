@@ -4,11 +4,12 @@
 </div>
 <div class="modal-body">
 	<%= form_tag nurse_path(@nurse.id, {:selected_nurse => @selected_nurse.id}), :method => 'PUT' do%>
-		<input type="text" name="first_name" placeholder="Ime" value="<%=@selected_nurse.first_name%>"/>
-		<input type="text" name="last_name" placeholder="Prezime" value="<%=@selected_nurse.last_name%>"/>
-		<input type="text" name="mobile_phone" placeholder="Mobitel" value="<%=@selected_nurse.mobile_phone%>" />
-		<input type="text" name="home_phone" placeholder="Telefon" value="<%=@selected_nurse.home_phone%>"/>
+		<input type="text" id="first_name" name="first_name" placeholder="Ime" value="<%=@selected_nurse.first_name%>"/>
+		<input type="text" id="last_name" name="last_name" placeholder="Prezime" value="<%=@selected_nurse.last_name%>"/>
+		<input type="text" id="mobile_phone" name="mobile_phone" placeholder="Mobitel" value="<%=@selected_nurse.mobile_phone%>" />
+		<input type="text" id="home_phone" name="home_phone" placeholder="Telefon" value="<%=@selected_nurse.home_phone%>"/>
 		<input type="hidden" name="nurse_id" value="<%=params[:nurse_id]%>" />	
 		<button class="btn btn-primary" type="submit">Izmjeni</button>
 	<% end %>
 </div>
+<script type="text/javascript">fakeDocumentReady();</script>

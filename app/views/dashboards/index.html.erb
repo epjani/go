@@ -6,4 +6,4 @@
 <h4 class="show_on_print" style="float:left;">
 	<%=@doctor_name%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@selected_date%>
 </h4>
-<%= render :partial => "shared/reservations", :locals => {:reservations => @reservations, :doctor_id => @doctor_id, :selected_date => @selected_date, :shift => @shift} %>
+<%= render :partial => "shared/reservations", :locals => {:reservations => @reservations, :doctor_id => @doctor_id, :selected_date => @selected_date, :shift => @shift, :search => nil} %>

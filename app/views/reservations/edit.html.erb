@@ -3,11 +3,11 @@
    	<h3 id="myModalLabel">Izmjeni postojeci termin</h3>
 </div>
 <div class="modal-body">
-	<%= form_tag nurse_reservation_path(@nurse.id), :method => 'PUT' do%>
-		<input type="text" name="first_name" placeholder="Ime" value="<%=@reservation.first_name%>"/>
-		<input type="text" name="last_name" placeholder="Prezime" value="<%=@reservation.last_name%>"/>
-		<input type="text" name="birthday" placeholder="Godiste" value="<%=@reservation.birthday%>"/>
-		<input type="text" name="phone" placeholder="Telefon" value="<%=@reservation.phone%>"/>
+	<%= form_tag nurse_reservation_path(@nurse.id), :method => 'PUT', :class => 'validate' do%>
+		<input type="text" name="first_name" id="first_name" placeholder="Ime" value="<%=@reservation.first_name%>"/>
+		<input type="text" name="last_name" id="last_name" placeholder="Prezime" value="<%=@reservation.last_name%>"/>
+		<input type="text" name="birthday" id="birthday" placeholder="Godiste" value="<%=@reservation.birthday%>"/>
+		<input type="text" name="phone" id="phone" placeholder="Telefon" value="<%=@reservation.phone%>"/>
 		<input type="text" name="reservation_date_1" placeholder="Datum rezervacije" value="<%=@reservation.reservation_date%>" disabled />
 		<input type="hidden" name="reservation_date" placeholder="Datum rezervacije" value="<%=@reservation.reservation_date%>" />
 		<input type="hidden" name="shift" value="<%=params[:shift]%>" />
@@ -29,6 +29,7 @@
 			<% end %>
 		</select>
 		<input type="hidden" name="type" value="<%=@reservation.reservation_type%>" />
-		<button class="btn btn-primary" type="submit">Izmjeni</button>
+		<input class="btn btn-primary" type="submit" value="Izmjeni" />
 	<% end %>
 </div>
+<script>fakeDocumentReady();</script>

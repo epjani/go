@@ -4,7 +4,7 @@
 	   	<h3 id="myModalLabel">Rezervisi pauzu za doktora</h3>
 	</div>
 	<div class="modal-body">
-		<%= form_tag nurse_reservations_path(@nurse.id), :method => 'POST' do%>
+		<%= form_tag nurse_reservations_path(@nurse.id), :method => 'POST', :class => 'validate', :id => 'asd' do%>
 			<select name="doctor_id" disabled>
 				<% @doctors.each do |doctor| %>
 					<option value="<%=doctor.id%>" <%="selected" if @doctor_id.to_i == doctor.id.to_i%>><%=doctor.full_name%></option>
@@ -21,7 +21,7 @@
 			</select>
 			<input type="text" name="reservation_date_1" placeholder="Datum rezervacije" value="<%=@reservation_date%>" disabled />
 			<input type="hidden" name="reservation_date" placeholder="Datum rezervacije" value="<%=@reservation_date%>" />
-			<button class="btn btn-primary" type="submit">Kreiraj</button>
+			<input class="btn btn-primary" type="submit" value="Kreiraj" />
 		<% end %>
 	</div>
 <% else %>
@@ -30,11 +30,11 @@
 	   	<h3 id="myModalLabel">Rezervisi novi termin</h3>
 	</div>
 	<div class="modal-body">
-		<%= form_tag nurse_reservations_path(@nurse.id), :method => 'POST' do%>
-			<input type="text" name="first_name" placeholder="Ime" />
-			<input type="text" name="last_name" placeholder="Prezime" />
-			<input type="text" name="birthday" placeholder="Godiste" />
-			<input type="text" name="phone" placeholder="Telefon" />
+		<%= form_tag nurse_reservations_path(@nurse.id), :method => 'POST', :class => "validate", :id => 'asd' do%>
+			<input type="text" id="first_name" name="first_name" placeholder="Ime" />
+			<input type="text" id="last_name" name="last_name" placeholder="Prezime" />
+			<input type="text" name="birthday" id="birthday" placeholder="Godiste" />
+			<input type="text" name="phone" id="phone" placeholder="Telefon" />
 			<input type="text" name="reservation_date_1" placeholder="Datum rezervacije" value="<%=@reservation_date%>" disabled />
 			<input type="hidden" name="reservation_date" placeholder="Datum rezervacije" value="<%=@reservation_date%>" />
 			<select name="doctor_id" disabled>
@@ -58,7 +58,8 @@
 					<option value="<%=et.id%>" <%="selected" if @examination_time.to_i == et.id%>><%=et.examination_time%></option>
 				<% end %>
 			</select>
-			<button class="btn btn-primary" type="submit">Kreiraj</button>
+			<input class="btn btn-primary" type="submit" value="Kreiraj" />
 		<% end %>
 	</div>
 <% end %>
+<script>fakeDocumentReady();</script>

@@ -2,30 +2,7 @@
 	<form action="<%=nurse_search_path(@nurse.id, {:doctor_id => @doctor_id, :selected_date => @selected_date}) %>" method="GET">
 		<input type="text" name="q" placeholder="Ime pacijenta" style="float:left;margin-top:5px;margin-left:12px;" value="<%= params[:q] %>" />
 	</form>
-<table class="table">
-	<tr>
-		<th>Ime</th>
-		<th>Prezime</th>
-		<th>Godiste</th>
-		<th>Vrsta pregleda</th>
-		<th>Doktor</th>
-		<th>Vrijeme</th>
-		<th>Datum</th>
-		<th>Sestra</th>
-	</tr>
-	<% @reservations.each do |reservation| %>
-			<tr>
-				<td><%= reservation.first_name %></td>
-				<td><%= reservation.last_name %></td>
-				<td><%= reservation.birthday %></td>
-				<td><%= reservation.examination.name %></td>
-				<td><%= reservation.doctor.full_name %></td>
-				<td><%= reservation.examination_time.examination_time %></td>
-				<td><%= reservation.reservation_date %></td>
-				<td><%= reservation.nurse.full_name%></td>
-			</tr>
-	<% end %>
-</table>
+<%= render :partial => "shared/reservations", :locals => {:reservations => @reservations, :doctor_id => @doctor_id, :selected_date => @selected_date, :shift => @shift, :search => true} %>
 <script>
 	$("#reservation_path").attr("href", "<%=new_nurse_reservation_path(@nurse.id, {:doctor_id => @doctor_id, :selected_date => @selected_date}).html_safe%>");
 </script>
