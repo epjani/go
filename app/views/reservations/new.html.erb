@@ -44,7 +44,7 @@
 			</select>
 			<input name="doctor_id" type="hidden" value="<%=@doctor_id%>" />
 			<input name="shift" type="hidden" value="<%=params[:shift]%>" />
-			<select name="examination_id">
+			<select id="examination_id" name="examination_id">
 				<option value="-1">Izaberi vrstu pregleda</option>
 				<% @examinations.each do |examination| %>
 					<% unless examination.id == Examination.pause.id %>

@@ -177,22 +177,32 @@
                   rules: {
                     first_name: {
                       minlength: 2,
-                      required: true
+                      required: function(element){
+                        if($("#examination_id").val() == <%= Examination.cito.id %>){return false;}else{return true;}
+                      }
                     },
                     last_name: {
                       minlength: 2,
-                      required: true
+                      required: function(element){
+                        if($("#examination_id").val() == <%= Examination.cito.id %>){return false;}else{return true;}
+                      }
                     },
                     email: {
                       required: true,
-                      email: true
+                      email: function(element){
+                        if($("#examination_id").val() == <%= Examination.cito.id %>){return false;}else{return true;}
+                      }
                     },
                     birthday: {
-                        required: true,
+                        required: function(element){
+                        if($("#examination_id").val() == <%= Examination.cito.id %>){return false;}else{return true;}
+                      },
                         minlength: 2
                     },
                     phone: {
-                        required: true,
+                        required: function(element){
+                        if($("#examination_id").val() == <%= Examination.cito.id %>){return false;}else{return true;}
+                      },
                         minlength: 2
                     }
                   },
@@ -208,6 +218,14 @@
                     .closest('.control-group').removeClass('error').addClass('success');
                   }
                  });
+            }
+            function unlessCITO(el){
+                console.log($(el));
+                console.log($("#examination_id"));
+                console.log(<%= Examination.cito.id%> );
+                if($("#examination_id").val() == <%= Examination.cito.id %>){
+                    return false;
+                }
             }
         </script>
         

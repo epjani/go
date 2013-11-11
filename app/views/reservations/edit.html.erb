@@ -16,7 +16,7 @@
 				<option value="<%=doctor.id%>" <%="selected" if @reservation.doctor_id == doctor.id%>><%=doctor.full_name%></option>
 			<% end %>
 		</select>
-		<select name="examination_id">
+		<select id="examination_id" name="examination_id">
 			<option value="-1">Izaberi vrstu pregleda</option>
 			<% @examinations.each do |examination| %>
 				<option value="<%=examination.id%>" <%="selected" if examination.id == @reservation.examination_id%>><%=examination.name%></option>
