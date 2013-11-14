@@ -104,9 +104,9 @@ class Nurse < ActiveRecord::Base
 
 	def get_structured_reservations(reservations, shift = nil)
 		unless shift.nil?
-			examination_times = ExaminationTime.where(:shift => shift)
+			examination_times = ExaminationTime.where(:shift => shift).order(:et_index)
 		else
-			examination_times = ExaminationTime.all
+			examination_times = ExaminationTime.order(:et_index)
 		end
 
 		structed_reservations = []
@@ -158,7 +158,7 @@ class Nurse < ActiveRecord::Base
 	def get_examination_times(selected_date, doctor_id = nil, shift = 1)
 		reservations = Reservation.where({:doctor_id => doctor_id, :reservation_date => selected_date}).select(:examination_time_id).map(&:examination_time_id)
 		examination_times = ExaminationTime.select(:id).map(&:id)
-		ExaminationTime.where(:id => examination_times - reservations, :shift => shift)
+		ExaminationTime.where(:id => examination_times - reservations, :shift => shift).order(:et_index)
 	end
 
 	def can_change_reservation?(reservation)
