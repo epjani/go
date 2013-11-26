@@ -7,6 +7,7 @@
 		<th>Vrijeme</th>
 		<th>Sestra</th>
 		<% if search %>
+			<th>Doktor</th>
 			<th>Datum</th>
 		<% end %>
 		<th class="hide_on_print">Izmjeni</th>
@@ -42,11 +43,12 @@
 				<td><%= reservation[:examination_time].examination_time %></td>
 				<td><%= reservation[:reservation].nurse.full_name%></td>
 				<% if search %>
+					<td><%= reservation[:reservation].doctor.full_name %></td>
 					<td><%= reservation[:reservation].reservation_date %></td>
 				<% end %>
 				<% if @nurse.can_change_reservation?(reservation[:reservation]) %>
 					<td><a class="hide_on_print" data-toggle="modal" data-target="#myModal" href="<%=edit_nurse_reservation_path(@nurse.id, reservation[:reservation].id, :shift => shift)%>">Izmjeni</a></td>
-					<td><a class="hide_on_print" href="<%=nurse_reservation_path(@nurse.id, reservation[:reservation].id, {:shift => shift, :doctor_id => doctor_id, :selected_date => selected_date})%>" data-method="DELETE"><span class="icon-remove-sign"></span></a></td>
+					<td><%= link_to '', nurse_reservation_path(@nurse.id, reservation[:reservation].id, {:shift => shift, :doctor_id => doctor_id, :selected_date => selected_date}), :method => :delete, :confirm => 'Da li ste sigurni?', :class=> 'hide_on_print icon-remove-sign' %></td>
 				<% end %>
 			</tr>
 		<% end %>
