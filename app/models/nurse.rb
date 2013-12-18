@@ -122,9 +122,23 @@ class Nurse < ActiveRecord::Base
 		return structed_reservations
 	end
 
+	def create_or_reject_reservation(examination_time_id, reservation_date)
+		
+		if Reservation.where("reservation_date = ? AND examination_time_id = ?", Date.parse(reservation_date), examination_time_id).first.nil?
+			return Reservation.new
+		else
+			return false
+		end
+	end
+
 	def create_reservation(first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type = Examination.standard)
-		reservation = Reservation.new
-		manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
+		reservation = create_or_reject_reservation(examination_time_id, reservation_date)
+		if reservation
+			manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
+			return true
+		else
+			return false
+		end
 	end
 
 	def edit_reservation(id, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
@@ -156,9 +170,10 @@ class Nurse < ActiveRecord::Base
 
 	# => ExaminationTime
 	def get_examination_times(selected_date, doctor_id = nil, shift = 1)
-		reservations = Reservation.where({:doctor_id => doctor_id, :reservation_date => selected_date}).select(:examination_time_id).map(&:examination_time_id)
-		examination_times = ExaminationTime.select(:id).map(&:id)
-		ExaminationTime.where(:id => examination_times - reservations, :shift => shift).order(:et_index)
+		# reservations = Reservation.where({:doctor_id => doctor_id, :reservation_date => Date.parse(selected_date)}).select(:examination_time_id).map(&:examination_time_id)
+		# examination_times = ExaminationTime.select(:id).map(&:id)
+		# ExaminationTime.where(:id => examination_times - reservations, :shift => shift).order(:et_index)
+		ExaminationTime.where(:shift => shift).order(:et_index)
 	end
 
 	def can_change_reservation?(reservation)

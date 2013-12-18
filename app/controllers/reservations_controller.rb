@@ -23,7 +23,8 @@ class ReservationsController <  ApplicationController
 
 	def create
 		reservation_type = params[:type].blank? ? nil : params[:type]
-		@nurse.create_reservation(params[:first_name], params[:last_name], params[:phone], params[:birthday], params[:doctor_id], params[:examination_id], params[:examination_time_id], params[:reservation_date], reservation_type)
+		reservation_passed = @nurse.create_reservation(params[:first_name], params[:last_name], params[:phone], params[:birthday], params[:doctor_id], params[:examination_id], params[:examination_time_id], params[:reservation_date], reservation_type)
+		flash[:alert] = 'Prethodna rezervacija nije bila upisana jer vec postoji rezervacija za taj termin!' unless reservation_passed
 		redirect_to nurse_dashboard_path(@nurse.id, {:doctor_id => params[:doctor_id], :selected_date => params[:reservation_date], :shift => params[:shift]})
 	end
 
