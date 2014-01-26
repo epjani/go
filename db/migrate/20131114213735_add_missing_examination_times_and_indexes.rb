@@ -1,6 +1,9 @@
 class AddMissingExaminationTimesAndIndexes < ActiveRecord::Migration
   def up
-  	 	
+  	
+  	add_column :examination_times, :et_index, :integer
+	ExaminationTime.create({:examination_time => "14:00-14:15", :shift => 2, :et_index => 7})
+
   	ExaminationTime.update_all("et_index = 1",{:examination_time => "07:30-07:45", :shift => 1})
   	ExaminationTime.update_all("et_index = 2",{:examination_time => "07:45-08:00", :shift => 1})
   	ExaminationTime.update_all("et_index = 3",{:examination_time => "08:00-08:15", :shift => 1})
@@ -36,7 +39,6 @@ class AddMissingExaminationTimesAndIndexes < ActiveRecord::Migration
     ExaminationTime.update_all("et_index = 4",{:examination_time => "13:15-13:30", :shift => 2})
     ExaminationTime.update_all("et_index = 5",{:examination_time => "13:30-13:45", :shift => 2})
     ExaminationTime.update_all("et_index = 6",{:examination_time => "13:45-14:00", :shift => 2})
-    ExaminationTime.create({:examination_time => "14:00-14:15", :shift => 2, :et_index => 7})
     ExaminationTime.update_all("et_index = 8",{:examination_time => "14:15-14:30", :shift => 2})
     ExaminationTime.update_all("et_index = 9",{:examination_time => "14:30-14:45", :shift => 2})
     ExaminationTime.update_all("et_index = 10",{:examination_time => "14:45-15:00", :shift => 2})   
