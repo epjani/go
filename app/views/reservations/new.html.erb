@@ -19,7 +19,8 @@
 					<option value="<%=et.id%>" <%="selected" if @examination_time.to_i == et.id%>><%=et.examination_time%></option>
 				<% end %>
 			</select>
-			<input type="text" name="reservation_date" placeholder="Datum rezervacije" value="<%=@reservation_date%>" />
+			<input type="text" name="reservation_date_1" placeholder="Datum rezervacije" value="<%=@reservation_date%>" disabled />
+            <input type="hidden" name="reservation_date" placeholder="Datum rezervacije" value="<%=@reservation_date%>" />
 			<input class="btn btn-primary" type="submit" value="Kreiraj" />
 		<% end %>
 	</div>
@@ -34,7 +35,8 @@
 			<input type="text" id="last_name" name="last_name" placeholder="Prezime" />
 			<input type="text" name="birthday" id="birthday" placeholder="Godiste" />
 			<input type="text" name="phone" id="phone" placeholder="Telefon" />
-			<input type="text" name="reservation_date" placeholder="Datum rezervacije" value="<%=@reservation_date%>" />
+			<input type="text" name="reservation_date_1" placeholder="Datum rezervacije" value="<%=@reservation_date%>" disabled />
+			<input type="hidden" name="reservation_date" placeholder="Datum rezervacije" value="<%=@reservation_date%>" />
 			
 			<select name="doctor_id" disabled>
 				<% @doctors.each do |doctor| %>
