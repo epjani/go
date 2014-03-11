@@ -9,7 +9,7 @@ class ReservationsController <  ApplicationController
 		@doctors = @nurse.get_doctors
 		@examinations = @nurse.get_examinations
 		
-		@reservation_date = params[:selected_date]
+		@reservation_date = Date.parse(params[:selected_date])
 		@doctor_id = params[:doctor_id].blank? ? @doctors.first.id : params[:doctor_id]
 		@examination_times = @nurse.get_examination_times(params[:selected_date], @doctor_id, params[:shift])
 		@examination_time = params[:examination_time].blank? ? nil : params[:examination_time]

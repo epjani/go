@@ -122,9 +122,9 @@ class Nurse < ActiveRecord::Base
 		return structed_reservations
 	end
 
-	def create_or_reject_reservation(examination_time_id, reservation_date)
+	def create_or_reject_reservation(examination_time_id, reservation_date, doctor_id)
 		
-		if Reservation.where("reservation_date = ? AND examination_time_id = ?", Date.parse(reservation_date), examination_time_id).first.nil?
+		if Reservation.where("reservation_date = ? AND examination_time_id = ? AND doctor_id = ?", Date.parse(reservation_date), examination_time_id, doctor_id).first.nil?
 			return Reservation.new
 		else
 			return false
@@ -132,7 +132,7 @@ class Nurse < ActiveRecord::Base
 	end
 
 	def create_reservation(first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type = Examination.standard)
-		reservation = create_or_reject_reservation(examination_time_id, reservation_date)
+		reservation = create_or_reject_reservation(examination_time_id, reservation_date, doctor_id)
 		if reservation
 			manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)
 			return true
@@ -181,7 +181,7 @@ class Nurse < ActiveRecord::Base
 			return true
 		else
 			reservation_owner_nurse = Nurse.find reservation.nurse_id
-			if reservation_owner_nurse.nurse_role == Nurse::ROLE_BASIC
+			if reservation_owner_nurse.nurse_role == Nurse::ROLE_BASIC || reservation.examination_id != Examination.cito.id
 				return true
 			else
 				return false
