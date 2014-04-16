@@ -151,7 +151,7 @@ class Nurse < ActiveRecord::Base
 	def delete_reservation(reservation_id)
 		reservation = Reservation.find reservation_id
 		reservation_nurse = Nurse.find reservation.nurse_id
-		Reservation.delete reservation_id if self.is_admin? || self.is_main? || reservation_nurse.nurse_role == Nurse::ROLE_BASIC
+		Reservation.delete reservation_id # if self.is_admin? || self.is_main? || reservation_nurse.nurse_role == Nurse::ROLE_BASIC
 	end
 	
 	def manipulate_reservation(reservation, first_name, last_name, phone, birthday, doctor_id, examination_id, examination_time_id, reservation_date, type)

@@ -30,7 +30,8 @@ class ReservationsController <  ApplicationController
 
 	def destroy
 		@nurse.delete_reservation(params[:id])
-		redirect_to nurse_dashboard_path(@nurse.id, {:doctor_id => params[:doctor_id], :shift => params[:shift], :doctor_id => params[:doctor_id], :selected_date => params[:reservation_date]})
+		#redirect_to nurse_dashboard_path(@nurse.id, {:doctor_id => params[:doctor_id], :shift => params[:shift], :doctor_id => params[:doctor_id], :selected_date => params[:reservation_date]})
+	    redirect_to(:back)
 	end
 
 	def edit

@@ -5,6 +5,7 @@
 		<th>Godiste</th>
 		<th>Vrsta pregleda</th>
 		<th>Vrijeme</th>
+		<th>Telefon</th>
 		<th>Sestra</th>
 		<% if search %>
 			<th>Doktor</th>
@@ -40,6 +41,7 @@
 				<td><%= reservation[:reservation].birthday %></td>
 				<td><%= reservation[:reservation].examination.nil? ? '' : reservation[:reservation].examination.name %></td>
 				<td><%= reservation[:examination_time].examination_time %></td>
+				<td><%= reservation[:reservation].phone %></td>
 				<td><%= reservation[:reservation].nurse.full_name%></td>
 				<% if search %>
 					<td><%= reservation[:reservation].doctor.full_name %></td>
