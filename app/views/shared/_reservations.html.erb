@@ -1,5 +1,5 @@
 <table class="table">
-	<tr>
+	<tr class="doprint">
 		<th>Ime</th>
 		<th>Prezime</th>
 		<th>Godiste</th>
@@ -32,9 +32,9 @@
 			<% if reservation[:reservation].reservation_type == Examination.pause.id %>
 			<tr style="background:#be2e2e;">
 			<% elsif reservation[:reservation].examination_id == Examination.cito.id %>
-			<tr style="background:#dad841;">
+			<tr style="background:#dad841;" class="doprint">
 			<% else %>
-			<tr>
+			<tr class="doprint">
 			<% end %>
 				<td><%= reservation[:reservation].first_name %></td>
 				<td><%= reservation[:reservation].last_name %></td>
